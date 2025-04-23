@@ -125,3 +125,148 @@ brew services stop mongodb-community
 
 #### For Windows:
 Simply close the Command Prompt window running MongoDB, or press `Ctrl+C`.
+
+## Git and GitHub Workflow Guide
+
+This section provides instructions on how to use Git and GitHub for collaboration on the Health Tracker project.
+
+### Setting Up Git
+
+1. **Configure Git** (if not already configured):
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your.email@example.com"
+   ```
+
+2. **Connect to GitHub** (recommended to use SSH):
+   ```bash
+   # Generate SSH key
+   ssh-keygen -t ed25519 -C "your.email@example.com"
+   
+   # Start ssh-agent and add key
+   eval "$(ssh-agent -s)"
+   ssh-add ~/.ssh/id_ed25519
+   ```
+   
+   Then add the SSH key to your GitHub account (copy the contents of `~/.ssh/id_ed25519.pub`).
+
+### Basic Git Commands
+
+1. **Check Status**:
+   ```bash
+   git status
+   ```
+
+2. **Creating and Switching Branches**:
+   ```bash
+   # Create and switch to a new branch
+   git checkout -b feature/new-feature
+   
+   # Switch to an existing branch
+   git checkout main
+   ```
+
+3. **Staging and Committing Changes**:
+   ```bash
+   # Stage specific files
+   git add file1.js file2.js
+   
+   # Stage all files
+   git add .
+   
+   # Commit changes with a message
+   git commit -m "Add feature: user profile editing"
+   ```
+
+4. **Push Changes to GitHub**:
+   ```bash
+   # Push to your branch
+   git push origin feature/new-feature
+   ```
+
+5. **Pull Latest Changes**:
+   ```bash
+   # Pull from main branch
+   git pull origin main
+   ```
+
+### Branching Strategy
+
+Follow this workflow for changes:
+
+1. **Create a branch** for each feature, bugfix, or task:
+   ```bash
+   git checkout -b feature/user-authentication
+   git checkout -b bugfix/login-error
+   git checkout -b task/update-dependencies
+   ```
+
+2. **Make your changes**, commit often with clear messages.
+
+3. **Pull the latest main branch** before submitting a pull request:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout feature/your-feature
+   git merge main
+   ```
+
+4. **Push your branch** to GitHub and create a pull request through the GitHub interface.
+
+### Handling Merge Conflicts
+
+Conflicts occur when the same part of code is modified differently in two branches. To resolve them:
+
+1. **Identify the conflict**:
+   ```bash
+   git status
+   ```
+   Files with conflicts will be marked as "both modified"
+
+2. **Open the conflicted files** in your editor. Look for conflict markers:
+   ```
+   <<<<<<< HEAD
+   // Your changes
+   =======
+   // Changes from the branch you're merging
+   >>>>>>> feature/branch-name
+   ```
+
+3. **Resolve conflicts** by editing the files to keep the appropriate code and removing the conflict markers.
+
+4. **Stage the resolved files**:
+   ```bash
+   git add resolved-file.js
+   ```
+
+5. **Complete the merge**:
+   ```bash
+   git commit
+   ```
+   (This will use a default merge commit message)
+
+6. **Push the resolved changes**:
+   ```bash
+   git push origin your-branch-name
+   ```
+
+### Pull Requests and Code Review
+
+1. **Create a Pull Request (PR)** on GitHub after pushing your branch.
+
+2. **Request reviews** from team members.
+
+3. **Address review comments** by making additional commits to your branch.
+
+4. **Merge the PR** once it's approved, using the GitHub interface.
+
+5. **Delete the branch** after it's merged (can be done through GitHub interface).
+
+### Best Practices
+
+- **Commit early and often** with clear, descriptive messages.
+- **Pull regularly** from the main branch to stay updated.
+- **Create focused branches** for specific tasks.
+- **Write descriptive commit messages** in the imperative form (e.g., "Add feature" not "Added feature").
+- **Review your own code** before requesting reviews from others.
+- **Never force push** to shared branches like main or develop.
